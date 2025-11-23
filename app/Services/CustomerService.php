@@ -49,4 +49,8 @@ class CustomerService
         return $customer;
     }
 
+    public static function getCustomerForToken(Request $request)
+    {
+        return Customer::where('token', $request->token)->first();
+    }
 }

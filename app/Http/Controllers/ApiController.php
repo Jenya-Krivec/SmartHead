@@ -36,5 +36,17 @@ class ApiController extends Controller
 
     }
 
+    public function getLatestTickets(Request $request, CustomerService $customerService)
+    {
 
+        $request->validate([
+            'created_at' => 'required|date_format:Y-m-d H:i:s',
+            'token' => 'required|string|max:255',
+        ]);
+
+        $customer = $customerService::getCustomerForToken($request);
+
+        return $customer ? TicketResource::collection(Ticket::where('customer_id', $customer->id)->where('created_at', '>', Carbon::parse($request->created_at, 'UTC'))->get()) : [];
+
+    }
 }
