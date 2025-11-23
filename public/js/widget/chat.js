@@ -1,6 +1,7 @@
 'use strict';
 class Chat{
     constructor(){
+        this.messagesContainer = document.getElementById('message-container');
         this.inputContainer = document.getElementById('input-container');
         this.attach = document.getElementById('attach');
         this.fileContainer = document.getElementById('file-container');
@@ -17,6 +18,15 @@ class Chat{
         this.expireToken = null;
         this.setToken();
         this.displayInputs();
+        this.defaultDate = '2025-11-23 00:00:00';
+        this.getTickets();
+        setInterval(this.getTickets.bind(this), 5000);
+        this.incomingMessageClass = 'border-2 border-gray-200 px-2 pt-2 mt-2 bg-white rounded-l-lg rounded-tr-lg ml-10';
+        this.outgoingMessageClass = 'border-2 border-gray-200 px-2 pt-2 mt-2 bg-white rounded-r-lg rounded-tl-lg mr-10';
+        this.subjectClass = 'border-b-2 border-gray-200';
+        this.textClass = 'text-xs';
+        this.dateStyle = 'font-size:8px;';
+
     }
     addEventListeners(){
         let inputFile = this.attach.children[1];
@@ -80,7 +90,7 @@ class Chat{
             'subject':this.subject.value,
             'message':this.message.value,
             'token':this.token ? this.token : this.expireToken,
-            'isIncoming':0,
+            'isIncoming':1,
         };
         if(this.file){
             this.param['file']=this.file;
@@ -117,7 +127,7 @@ class Chat{
                 this.saveToken(data.data.token);
                 this.hideInputs();
                 this.clearInputs();
-                this.getTickets();
+                this.insertMessage(data.data);
             }).catch(errors => {
                 this.displayError(errors);
             });
@@ -131,6 +141,61 @@ class Chat{
     closeError(){
         this.error.classList.add('hidden');
         this.error.children[1].innerHTML = '';
+    }
+    getLastMessage(){
+        return this.messagesContainer.children.length > 0 ? this.messagesContainer.lastElementChild.children[2].innerHTML : this.defaultDate;
+    }
+    getTickets(){
+        if (!this.token) {
+            return null;
+        }
+        this.closeError();
+        const options = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': this.getCSRF()
+            }
+        };
+        fetch('/api/tickets?token='+this.token+'&created_at='+this.getLastMessage(), options).then(async response => {
+            if (!response.ok) {
+                if (response.status === 422) {
+                    const errorData = await response.json();
+                    throw errorData.errors;
+                }
+                throw new Error(response.status);
+            }
+            return response.json();
+        }).then(data => {
+            this.insertMessages(data.data);
+        }).catch(errors => {
+            console.log(errors);
+        });
+    }
+    insertMessages(messages){
+        for (let i = 0; i < messages.length; i++) {
+            this.insertMessage(messages[i]);
+        }
+    }
+    insertMessage(message){
+        const messageContainer = document.createElement('div');
+        const subject = document.createElement('div');
+        const text = document.createElement('div');
+        const date = document.createElement('div');
+        messageContainer.className = Number(message.is_incoming) ? this.incomingMessageClass : this.outgoingMessageClass;
+        subject.className = this.subjectClass;
+        subject.textContent = message.subject;
+        text.className = this.textClass;
+        text.textContent = message.text;
+        date.style = this.dateStyle;
+        date.className = 'date';
+        date.textContent = message.created_at;
+        messageContainer.appendChild(subject);
+        messageContainer.appendChild(text);
+        messageContainer.appendChild(date);
+        this.messagesContainer.appendChild(messageContainer);
+        messageContainer.scrollIntoView({block: "start", behavior: "smooth"});
     }
 
 }

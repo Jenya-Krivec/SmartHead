@@ -25,14 +25,17 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 p-4">
-<div id="chat" class="h-80 m-auto flex flex-col">
-    <div class="flex justify-between border-b-2 pb-2 border-gray-300">
+<body class="bg-gray-100">
+<div id="chat" class="h-92 m-auto flex flex-col overflow-hidden">
+    <div class="flex fixed w-full top-0 left-0 justify-between border-b-2 p-2 pl-4 bg-gray-100 border-gray-300 z-10">
         <div>Добрий день!</div>
     </div>
     <input type="text" name="name" class="hidden bg-white border-2 border-gray-300 rounded-md px-2 py-2 mt-2" placeholder="Введите имя" minlength="2" maxlength="255">
     <input type="tel" name="phone" class="hidden bg-white border-2 border-gray-300 rounded-md px-2 py-2 mt-2" placeholder="Введите телефон: +14155552671" minlength="8" maxlength="15">
     <input type="email" name="email" class="hidden bg-white border-2 border-gray-300 rounded-md px-2 py-2 mt-2" placeholder="Введите email" minlength="2" maxlength="255">
+    <div id="message-container" class="flex overflow-y-auto overflow-x-hidden flex-col mt-10 px-2 pb-2">
+
+    </div>
     <div id="input-container" class="bg-white fixed bottom-0 left-0 right-0 h-12">
         <div id="file-container" class="bg-white absolute bottom-22 left-0 right-0 h-6 hidden px-2 text-blue-500">
             <div class="flex items-center"></div>
