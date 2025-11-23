@@ -22,6 +22,7 @@ class TicketResource extends JsonResource
             'text' => $this->text,
             'is_incoming' => $this->is_incoming,
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
+            'file' => $this->file,
             'token' => $this->token,
             'getTickets' => $this->getTickets
         ];
