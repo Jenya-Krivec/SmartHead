@@ -1,0 +1,48 @@
+@import "tailwindcss";
+.border-blue-1{
+    border-color: #164b82 !important;
+}
+.border-l-blue-1{
+    border-left-color: #164b82 !important;
+}
+.text-blue-1{
+    color: #164b82 !important;
+}
+.bg-blue-1{
+    background-color: #164b82 !important;
+}
+.bg-white-1{
+    background-color: #f2f7fa !important;
+}
+.hover\:bg-blue-1 {
+    &:hover {
+        @media (hover: hover) {
+            background-color: #164b82 !important;
+        }
+    }
+}
+.hover\:bg-white {
+    &:hover {
+        @media (hover: hover) {
+            background-color: white !important;
+        }
+    }
+}
+.file\:bg-blue-1 {
+    &::file-selector-button {
+        background-color: #164b82;
+    }
+}
+/**Login page**/
+.form-group input::placeholder{
+    opacity: 0;
+}
+.form-group input:focus + label {
+    top: -1.5rem;
+}
+.form-group input:not(:placeholder-shown) + label {
+    top: -1.5rem;
+}
+.form-group input:not(:placeholder-shown):not(:focus) + label {
+    top: -1.5rem;
+}
