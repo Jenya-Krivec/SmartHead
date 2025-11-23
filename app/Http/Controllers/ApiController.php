@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use App\Services\CustomerService;
+use App\Services\TicketService;
 use Carbon\Carbon;
 
 
 class ApiController extends Controller
 {
-    public function store(Request $request, CustomerService $customerService){
+    public function store(Request $request, CustomerService $customerService, TicketService $ticketService): TicketResource
+    {
 
         $customer = $customerService::create($request);
 
@@ -23,20 +25,13 @@ class ApiController extends Controller
             'isIncoming' => 'required|boolean',
         ]);
 
-        $ticket = Ticket::create([
-            'customer_id' => $customer->id,
-            'subject' => $request->subject,
-            'text' => $request->message,
-            'is_incoming' => $request->isIncoming
-        ]);
-
-        $ticket['token'] = $request->token;
+        $ticket = $ticketService::create($request, $customer);
 
         return new TicketResource($ticket);
 
     }
 
-    public function getLatestTickets(Request $request, CustomerService $customerService)
+    public function getLatestTickets(Request $request, CustomerService $customerService): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
 
         $request->validate([
@@ -46,7 +41,9 @@ class ApiController extends Controller
 
         $customer = $customerService::getCustomerForToken($request);
 
-        return $customer ? TicketResource::collection(Ticket::where('customer_id', $customer->id)->where('created_at', '>', Carbon::parse($request->created_at, 'UTC'))->get()) : [];
+        $tickets = Ticket::where('customer_id', $customer->id)->where('created_at', '>', Carbon::parse($request->created_at, 'UTC'))->get();
+
+        return TicketResource::collection($tickets);
 
     }
 }

@@ -127,7 +127,7 @@ class Chat{
                 this.saveToken(data.data.token);
                 this.hideInputs();
                 this.clearInputs();
-                this.insertMessage(data.data);
+                Number(data.data.getTickets) ? this.getTickets() : this.insertMessage(data.data);
             }).catch(errors => {
                 this.displayError(errors);
             });
