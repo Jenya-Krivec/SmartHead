@@ -7,12 +7,13 @@ use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use App\Services\CustomerService;
 use App\Services\TicketService;
+use App\Services\FileService;
 use Carbon\Carbon;
 
 
 class ApiController extends Controller
 {
-    public function store(Request $request, CustomerService $customerService, TicketService $ticketService): TicketResource
+    public function store(Request $request, CustomerService $customerService, TicketService $ticketService, FileService $fileService): TicketResource
     {
 
         $customer = $customerService::create($request);
@@ -26,6 +27,8 @@ class ApiController extends Controller
         ]);
 
         $ticket = $ticketService::create($request, $customer);
+
+        $ticket = $fileService::upload($request, $ticket);
 
         return new TicketResource($ticket);
 

@@ -25,8 +25,8 @@ class Chat{
         this.outgoingMessageClass = 'border-2 border-gray-200 px-2 pt-2 mt-2 bg-white rounded-r-lg rounded-tl-lg mr-10';
         this.subjectClass = 'border-b-2 border-gray-200';
         this.textClass = 'text-xs';
+        this.fileClass = 'text-blue-500 text-xs border-t-2 border-gray-200';
         this.dateStyle = 'font-size:8px;';
-
     }
     addEventListeners(){
         let inputFile = this.attach.children[1];
@@ -98,7 +98,11 @@ class Chat{
     }
     getData(){
         this.setData();
-        return JSON.stringify(this.param);
+        let data = new FormData();
+        for (let key in this.param){
+            data.append(key, this.param[key]);
+        }
+        return data;
     }
     getCSRF(){
         return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -109,8 +113,6 @@ class Chat{
             method: 'POST',
             body: this.getData(),
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
                 'X-CSRF-TOKEN': this.getCSRF()
             }
         };
@@ -127,6 +129,9 @@ class Chat{
                 this.saveToken(data.data.token);
                 this.hideInputs();
                 this.clearInputs();
+                if (this.file) {
+                    this.removeFile();
+                }
                 Number(data.data.getTickets) ? this.getTickets() : this.insertMessage(data.data);
             }).catch(errors => {
                 this.displayError(errors);
@@ -143,7 +148,7 @@ class Chat{
         this.error.children[1].innerHTML = '';
     }
     getLastMessage(){
-        return this.messagesContainer.children.length > 0 ? this.messagesContainer.lastElementChild.children[2].innerHTML : this.defaultDate;
+        return this.messagesContainer.children.length > 0 ? this.messagesContainer.lastElementChild.lastElementChild.innerHTML : this.defaultDate;
     }
     getTickets(){
         if (!this.token) {
@@ -193,6 +198,12 @@ class Chat{
         date.textContent = message.created_at;
         messageContainer.appendChild(subject);
         messageContainer.appendChild(text);
+        if (message.file) {
+            const file = document.createElement('div');
+            file.className = this.fileClass;
+            file.textContent = message.file;
+            messageContainer.appendChild(file);
+        }
         messageContainer.appendChild(date);
         this.messagesContainer.appendChild(messageContainer);
         messageContainer.scrollIntoView({block: "start", behavior: "smooth"});

@@ -203,9 +203,6 @@
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
-  .top-1 {
-    top: calc(var(--spacing) * 1);
-  }
   .top-1\/2 {
     top: calc(1/2 * 100%);
   }
@@ -248,14 +245,8 @@
   .bottom-114 {
     bottom: calc(var(--spacing) * 114);
   }
-  .bottom-118 {
-    bottom: calc(var(--spacing) * 118);
-  }
   .left-0 {
     left: calc(var(--spacing) * 0);
-  }
-  .left-1 {
-    left: calc(var(--spacing) * 1);
   }
   .left-1\/2 {
     left: calc(1/2 * 100%);
@@ -287,20 +278,14 @@
   .mt-4 {
     margin-top: calc(var(--spacing) * 4);
   }
-  .mt-6 {
-    margin-top: calc(var(--spacing) * 6);
-  }
-  .mt-8 {
-    margin-top: calc(var(--spacing) * 8);
-  }
   .mt-10 {
     margin-top: calc(var(--spacing) * 10);
   }
+  .mt-12 {
+    margin-top: calc(var(--spacing) * 12);
+  }
   .mr-4 {
     margin-right: calc(var(--spacing) * 4);
-  }
-  .mr-8 {
-    margin-right: calc(var(--spacing) * 8);
   }
   .mr-10 {
     margin-right: calc(var(--spacing) * 10);
@@ -335,18 +320,6 @@
   .h-18 {
     height: calc(var(--spacing) * 18);
   }
-  .h-80 {
-    height: calc(var(--spacing) * 80);
-  }
-  .h-84 {
-    height: calc(var(--spacing) * 84);
-  }
-  .h-88 {
-    height: calc(var(--spacing) * 88);
-  }
-  .h-90 {
-    height: calc(var(--spacing) * 90);
-  }
   .h-92 {
     height: calc(var(--spacing) * 92);
   }
@@ -371,19 +344,8 @@
   .w-full {
     width: 100%;
   }
-  .border-collapse {
-    border-collapse: collapse;
-  }
-  .-translate-x-1 {
-    --tw-translate-x: calc(var(--spacing) * -1);
-    translate: var(--tw-translate-x) var(--tw-translate-y);
-  }
   .-translate-x-1\/2 {
     --tw-translate-x: calc(calc(1/2 * 100%) * -1);
-    translate: var(--tw-translate-x) var(--tw-translate-y);
-  }
-  .-translate-y-1 {
-    --tw-translate-y: calc(var(--spacing) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
   .-translate-y-1\/2 {
@@ -398,9 +360,6 @@
   }
   .cursor-pointer {
     cursor: pointer;
-  }
-  .resize {
-    resize: both;
   }
   .flex-col {
     flex-direction: column;
@@ -446,10 +405,6 @@
   .rounded-tr-lg {
     border-top-right-radius: var(--radius-lg);
   }
-  .border {
-    border-style: var(--tw-border-style);
-    border-width: 1px;
-  }
   .border-2 {
     border-style: var(--tw-border-style);
     border-width: 2px;
@@ -491,9 +446,6 @@
   }
   .p-2 {
     padding: calc(var(--spacing) * 2);
-  }
-  .p-4 {
-    padding: calc(var(--spacing) * 4);
   }
   .p-6 {
     padding: calc(var(--spacing) * 6);
@@ -564,9 +516,6 @@
   }
   .lowercase {
     text-transform: lowercase;
-  }
-  .underline {
-    text-decoration-line: underline;
   }
   .opacity-50 {
     opacity: 50%;
