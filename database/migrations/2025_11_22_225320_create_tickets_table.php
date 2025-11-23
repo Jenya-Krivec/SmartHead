@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('text');
             $table->boolean('is_incoming')->default(true);
             $table->enum('status', ['new', 'in progress', 'processed'])->default('new');
-            $table->dateTime('response_date');
+            $table->dateTime('response_date')->nullable();
             $table->timestamps();
         });
     }
