@@ -39,8 +39,7 @@
         </form>
         <div class="flex flex-col items-center">
             @foreach($customers as $customer)
-                <form action="" method="GET" class="mt-2 w-full lg:w-280">
-                    @csrf
+                <form action="{{route('admin.customer', ['id' => $customer['id']])}}" method="GET" class="mt-2 w-full lg:w-280">
                     <button type="submit" class="w-full grid grid-cols-4 p-2 border-2 border-blue-1 cursor-pointer">
                         <span class="p-2">Имя: {{ $customer['name'] }}</span>
                         <span class="p-2">Телефон: {{ $customer['phone'] }}</span>

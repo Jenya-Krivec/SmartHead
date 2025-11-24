@@ -23,7 +23,7 @@ class Ticket extends Model implements HasMedia
         'is_incoming',
         'response_date',
     ];
-
+    protected $appends = ['file'];
     public function getFileAttribute()
     {
         return $this->getFirstMedia('files')?->file_name;

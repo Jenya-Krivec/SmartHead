@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Ticket;
+use Illuminate\Validation\Rule;
 
 class TicketService
 {
@@ -28,4 +29,17 @@ class TicketService
 
         return $ticket;
     }
+
+    public static function updateStatus($request)
+    {
+        $request->validate([
+            'status' => ['required', 'string', Rule::in(['new', 'in progress', 'processed'])],
+            'id' => ['required', 'numeric']
+        ]);
+
+        $tickets = Ticket::where('customer_id', $request->id)->update(['status' => $request->status]);
+
+        return $tickets;
+    }
+
 }

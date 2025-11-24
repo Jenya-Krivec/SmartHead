@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WidgetController;
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\AdminIndexController;
+use App\Http\Controllers\AdminCustomerController;
 use App\Http\Middleware\AuthenticateMiddleware;
 
 Route::get('/', [DashboardController::class, 'create'])->name('index');
@@ -20,5 +21,9 @@ Route::post('/login/destroy', [AuthenticateController::class, 'destroy'])->name(
 Route::middleware([AuthenticateMiddleware::class])->group(function () {
 
     Route::get('/admin/index', [AdminIndexController::class, 'create'])->name('admin.index');
+
+    Route::get('/admin/customer/{id}', [AdminCustomerController::class, 'create'])->name('admin.customer');
+
+    Route::post('/admin/customer/{id}', [AdminCustomerController::class, 'updateStatus'])->name('admin.customer');
 
 });

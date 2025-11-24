@@ -21,7 +21,7 @@
 </div>
 <header class="fixed w-full z-30 border-b-2 border-blue-1 bg-white">
     <nav class="flex items-center py-5 w-full">
-        <a href="{{route('index')}}" class="mx-4 sm:mx-10 flex justify-center items-center text-blue-1 font-bold">
+        <a href="{{route('admin.index')}}" class="mx-4 sm:mx-10 flex justify-center items-center text-blue-1 font-bold">
             <div class="logo">
                 <img src="{{asset('img/logo.png').'?v='.filemtime('img/logo.png')}}" alt="SmartHead" class="w-6 mx-2 logo" width="150" height="150">
             </div>
