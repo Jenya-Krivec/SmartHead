@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Ticket;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\Rule;
 
 class TicketService
@@ -40,6 +41,19 @@ class TicketService
         $tickets = Ticket::where('customer_id', $request->id)->update(['status' => $request->status]);
 
         return $tickets;
+    }
+
+    public static function getTickets($request): Collection
+    {
+        $request->validate([
+            'period' => ['required', 'string', Rule::in(['day', 'week', 'month'])],
+        ]);
+
+         return Ticket::filterDay($request->period)
+            ->filterWeek($request->period)
+            ->filterMonth($request->period)
+            ->get();
+
     }
 
 }

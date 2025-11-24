@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\TicketResource;
+use App\Http\Resources\ApiTiketResourse;
 use App\Models\Ticket;
 use App\Services\CustomerService;
 use App\Services\TicketService;
 use App\Services\FileService;
 use Carbon\Carbon;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 
 class ApiController extends Controller
@@ -34,7 +36,7 @@ class ApiController extends Controller
 
     }
 
-    public function getLatestTickets(Request $request, CustomerService $customerService): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    public function getLatestTickets(Request $request, CustomerService $customerService):AnonymousResourceCollection
     {
 
         $request->validate([
@@ -49,4 +51,12 @@ class ApiController extends Controller
         return TicketResource::collection($tickets);
 
     }
+
+    public function getStatistics(Request $request, TicketService $ticketService):AnonymousResourceCollection
+    {
+        $tickets = $ticketService::getTickets($request);
+
+        return ApiTiketResourse::collection($tickets);
+    }
+
 }

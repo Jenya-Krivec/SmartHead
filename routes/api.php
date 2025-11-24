@@ -7,3 +7,5 @@ use App\Http\Controllers\ApiController;
 Route::post('/tickets', [ApiController::class, 'store']);
 
 Route::get('/tickets', [ApiController::class, 'getLatestTickets']);
+
+Route::get('/tickets/statistics', [ApiController::class, 'getStatistics']);
