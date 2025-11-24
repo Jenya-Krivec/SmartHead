@@ -49,6 +49,11 @@ class CustomerService
         return $customer;
     }
 
+    public static function getCustomer(Request $request): array
+    {
+        return Customer::with(['tickets'])->where('id', $request->id)->first()->toArray();
+    }
+
     public static function getCustomerForToken(Request $request)
     {
         return Customer::where('token', $request->token)->first();
@@ -56,6 +61,14 @@ class CustomerService
 
     public static function getCustomers(Request $request): array
     {
+        request()->validate([
+            'phone' => 'nullable|string',
+            'email' => 'nullable|string',
+            'status' => 'nullable|string',
+            'date_from' => 'nullable|date_format:Y-m-d',
+            'date_to' => 'nullable|date_format:Y-m-d',
+        ]);
+
         $customers = Customer::with('tickets')
             ->filterPhone($request->phone)
             ->filterEmail($request->email)
