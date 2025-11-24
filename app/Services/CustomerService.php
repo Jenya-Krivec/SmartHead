@@ -53,4 +53,21 @@ class CustomerService
     {
         return Customer::where('token', $request->token)->first();
     }
+
+    public static function getCustomersWithTickets(Request $request): array
+    {
+        $customers = Customer::with('tickets')
+            ->filterPhone($request->phone)
+            ->filterEmail($request->email)
+            ->filterStatus($request->status)
+            ->filterDateFrom($request->date_from)
+            ->filterDateTo($request->date_to)
+            ->get();
+
+        foreach ($customers as $key => $customer) {
+            $customers[$key]['status'] = $customer->status;
+        }
+
+        return $customers->toArray();
+    }
 }

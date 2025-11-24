@@ -39,7 +39,7 @@
                     <img src="{{asset('img/logo.png').'?v='.filemtime('img/logo.png')}}" alt="SmartHead" class="w-6 mx-2 logo" width="150" height="150">
                 </div>
                 <p>SmartHead</p>
-                <a href="" class="mr-4 sm:mr-10 flex justify-center items-center text-blue-1 font-bold">Login</a>
+                <a href="{{route('admin.login')}}" class="mr-4 sm:mr-10 flex justify-center items-center text-blue-1 font-bold">Login</a>
             </a>
         </div>
     </nav>

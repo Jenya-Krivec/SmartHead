@@ -28,4 +28,5 @@ class Ticket extends Model implements HasMedia
     {
         return $this->getFirstMedia('files')?->file_name;
     }
+
 }
